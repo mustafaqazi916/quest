@@ -1,0 +1,73 @@
+<!--MAIN QUEST PAGE
+    displays all created Quests
+-->
+
+<% include partials/header %>
+
+<div class = "container">
+    <h1 class="text-center title"><%=pageTitle%> Quests</h1>
+    <div class="row centerSort">
+      <a href="/q" class="sort hot">Hottest</a>
+      <a href="/quests/newest" class="sort new">Newest</a>
+      <a href="/quests/popular" class="pop">Most Popular</a>
+    </div>
+    <div id="easyPaginate">
+      <ul>
+        <% quests.forEach(function(quest){ %>
+              <li>
+                <div class="row">
+                  <div class="panel panel-default">
+                    <div class="panel-heading">
+                      <a href="/q/<%= quest.category %>/<%= quest._id%>"><h2 class="panel-title questTitle" style = "display: inline-block"><%= quest.title %></h2></a>
+                      <img src="/images/coin.png" alt="Quallu" class="heart pull-right"><p class = "pull-right" id = "likebtn" style = "display: inline-block;"> <%= quest.likes %></p>
+                    </div>
+                    <div class="panel-body">
+                        <a href="/q/<%= quest.category %>"><p class="category clear"><%= quest.category %></p></a><p class="divider"></p>
+                        <p class="numOfSteps"><%= quest.stepnum %> Steps</p><p class="divider"></p>
+                        <p class="times"><%= quest.timessolved %> Solves</p><p class="divider"></p>
+                        <!--<img src="/images/chest.png" alt="Solves" class="pirate timesImg">-->
+                        <%  var creatorOrEdit = quest.creator;
+                            var creatorLink = "users/" + quest.creator;
+                            if (isAuth){
+                              if(quest.creator == usertop.username){
+                                creatorOrEdit = "Edit"
+                                creatorLink = "qediting/" + quest._id;
+                              }
+                            }  
+                        %>
+                          <p class ="pull-right"><a href = "<%= creatorLink %>"><%= creatorOrEdit %> </a></p>
+                          <img src="/images/pirate.png" alt="Quallu" class="pirate pull-right">
+                        <p class="date"><%= quest.date %></p>
+                    </div>
+                  </div>
+                </div>
+              </li>
+        <% }); %>
+      </ul>
+    </div>
+</div>
+
+<footer>
+  <p style="font-weight: bold;">About</p>
+  <p><a style="color: #ddd;" href="#">The Team</a></p>
+</footer>
+
+<script>
+
+$('#easyPaginate').easyPaginate({
+    paginateElement: 'li',
+    elementsPerPage: 20,
+    firstButton: false,
+    lastButton: false,
+    prevButtonText: '<span class="glyphicon glyphicon-menu-left" aria-hidden="true">',
+    nextButtonText: '<span class="glyphicon glyphicon-menu-right" aria-hidden="true">',
+    effect: 'default'
+});
+
+function incLikes() {
+  
+}
+</script>
+
+
+<% include partials/footer %>

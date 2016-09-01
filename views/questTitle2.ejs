@@ -1,0 +1,146 @@
+<!--SPECIFIED QUEST PAGE
+    displays the contents of a specific Quest
+-->
+
+<% include partials/header %>
+<% var i = 1; %>
+<script type = 'text/javascript'>
+  var answer =[];
+</script>
+<div class = "container">
+    <h1 class="text-center">Quest</h1>
+    <% questTitle.forEach(function(quest){ %>
+    
+       <script type = 'text/javascript'>
+           var numOfSteps = <%= quest.steps.length %>;
+       </script>
+ 
+            <div class="row">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <a href="/q/<%= quest.category %>/<%=quest._id%>"><h2 class="panel-title"><%= quest.title %></h2></a>
+                </div>
+                <div class="panel-body">
+                    <a href="/q/<%= quest.category %>"><p class="category"><%= quest.category %></p><p class="divider">|</p></a>
+                    <p class="numOfSteps"><%= quest.stepnum %> Steps</p><p class="divider">|</p>
+                    <p class="date"><%= quest.date %></p>
+                </div>
+              </div>
+            </div>
+            
+            
+            <div class="row">
+                  <ul class="list-group">
+                    <li class="list-group-item"><h3><%= 1 %>. <%= quest.steps[0].clue %></h3></li>
+                    <li class="list-group-item"><div id="showLink0"></div></li>
+                    <li class="list-group-item">
+                      <form>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="userAnswer<%= 0 %>" placeholder="Answer">
+                            <span class="input-group-btn">
+                              <button type="button" onclick="showStep()" class="btn btn-default"/>Check</button>
+                            </span>
+                        </div><!-- /input-group -->
+                      </form>
+                    </li>
+                  </ul>
+           </div>
+           <script type = 'text/javascript'>
+               answer[0] = "<%= quest.steps[0].answer %>";
+           </script>
+           
+           
+           <% for(var i=1; i<quest.steps.length; i++){ %>
+             <div class="row" id="nextStep<%= i%>" style="display:none;">
+                    <ul class="list-group">
+                      <li class="list-group-item"><h3><%= i + 1 %>. <%= quest.steps[i].clue %></h3></li>
+                      <li class="list-group-item"><div id="showLink<%= i %>"></div></li>
+                      <li class="list-group-item">
+                        <form>
+                          <div class="input-group">
+                            <input type="text" class="form-control" id="userAnswer<%= i %>" placeholder="Answer">
+                            <span class="input-group-btn">
+                              <button type="button" onclick="showStep()" class="btn btn-default"/>Check</button>
+                            </span>
+                          </div><!-- /input-group -->
+                        </form>
+                      </li>
+                    </ul>
+             </div>
+             
+             
+             <script type = 'text/javascript'>
+               answer[<%= i %>] = <%= quest.steps[i].answer %>;
+               //changing the link type
+               <% for(var x=0; x<quest.steps.length; x++){ %>
+                 
+                  if("<%= quest.steps[x].qType %>" == "wiki"){
+                        var wiki = '<iframe src="<%= quest.steps[x].link %>"></iframe>';
+                        document.getElementById('showLink<%= x %>').innerHTML = wiki;
+                  } else if("<%= quest.steps[x].qType %>" == "webpage"){
+                        var webpage = '<h2 class="text-center">Please visit <a href="<%= quest.steps[x].link %>" target="_blank"><%= quest.steps[x].link %></a> to solve this clue.</h2>';
+                        document.getElementById('showLink<%= x %>').innerHTML = webpage;
+                  } else if("<%= quest.steps[x].qType %>" == "youtube"){
+                        var youtube = '<div class="embed-responsive embed-responsive-16by9"><iframe class="embed-responsive-item" src="<%= quest.steps[x].link %>"></iframe></div>'.replace("watch?v=", "v/");
+                        document.getElementById('showLink<%= x %>').innerHTML = youtube;
+                  } else if("<%= quest.steps[x].qType %>" == "map"){
+                        var map = '<iframe width="600" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBRK_agG2N-dcNS6cFEvf1Wn__38g8APcg &q=<%= quest.steps[x].link %>" allowfullscreen></iframe>';
+                        document.getElementById('showLink<%= x %>').innerHTML = map;
+                  }
+
+               <% } %>
+             </script>
+          <% } %>
+    <% }); %>
+</div>
+
+<% function convertToSlug(Text){ 
+    return Text
+        .toLowerCase()
+        .replace(/ /g,'-')
+        .replace(/[^\w-]+/g,'')
+        ;
+} %>
+<script type = 'text/javascript'>
+var count = 1;
+var id = "userAnswer" + (count-1);
+function showStep() {
+  if(answer[count-1].toLowerCase() == document.getElementById(id).value.toLowerCase() && count == numOfSteps){
+    var str = '<h3 class = "congrats">Congrats! You have completed this Quest.</h3><p>Good Job</p>'
+    div = document.getElementById( 'nextStep'+(count-1)+'' );
+    div.insertAdjacentHTML( 'afterend', str );
+    window.scrollTo(0, document.body.scrollHeight);
+    
+  }
+  else if(answer[count-1].toLowerCase() == document.getElementById(id).value.toLowerCase()){
+    document.getElementById('nextStep' + count).style.display = "block";
+     count++;
+     id = "userAnswer" + (count-1);
+     window.scrollTo(0, document.body.scrollHeight);
+  }
+  else
+    alert("That is incorrect. Enter the correct answer to move on to the next step.");
+}
+
+$('body').on('keydown', 'input, select, textarea', function(e) {
+    var self = $(this)
+      , form = self.parents('form:eq(0)')
+      , focusable
+      , next
+      ;
+    if (e.keyCode == 13) {
+        focusable = form.find('input,a,select,button,textarea').filter(':visible');
+        next = focusable.eq(focusable.index(this)+1);
+        if (next.length) {
+            next.click();
+        } else {
+            next.click();
+        }
+        return false;
+    }
+});
+
+</script>
+
+
+<% include partials/footer %>

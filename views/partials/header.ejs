@@ -1,0 +1,63 @@
+
+<!DOCTYPE html>
+<html id="main">
+    <head>
+        <title>Questavi</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <link rel="stylesheet" href="/app.css">
+        <script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
+        <link href='https://fonts.googleapis.com/css?family=Gudea:400,700|Roboto' rel='stylesheet' type='text/css'>
+        <script src="/jquery.easyPaginate.js"></script>
+        <script>
+        window.onload = function() {
+          if(document.getElementById("home")!=null){
+            $('html, body').css({'background-color': '#FFFFFF',
+                                'background': 'url(/images/home2.gif) no-repeat center center fixed',
+                                '-webkit-background-size': 'cover',
+                                '-moz-background-size': 'cover',
+                                '-o-background-size': 'cover',
+                                'background-size': 'cover'
+              
+            });
+          }
+        };
+        </script>
+    </head>
+    <body>
+        <nav class="navbar navbar-default navbar-fixed-top menu">
+          <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="/"><img src="/images/qualluText.png" alt="Quallu" class="logoMenu"></a>
+            </div>
+        
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+              <ul class="nav navbar-nav">
+                <li><a href="/q">Quests</a></li>
+                <li><a href="/categories">Categories</a></li>
+                <li><a href="/users">Users</a></li>
+                <li><a href="/post">Create</a></li>
+              </ul>
+              <% if(isAuth){ %> 
+              <ul class = "nav navbar-nav navbar-right">
+                <li><a href = "/users/<%=usertop.username%>"><img src="/images/pirate.png" alt="Pirate" class="pirate"> <%=usertop.username%> </a></li>
+                <li><a href = "/logout">Log Out</a></li>
+              </ul>
+              <% }else{ %>
+              <ul class = "nav navbar-nav navbar-right">
+                <li><a href = "/howto">How To</a></li>
+                <li><a href = "/register">Sign Up</a></li>
+                <li><a href = "/login">Log In </a></li>
+              </ul>
+              <% } %>
+            </div><!-- /.navbar-collapse -->
+          </div><!-- /.container-fluid -->
+        </nav>

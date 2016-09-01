@@ -1,0 +1,77 @@
+<!--MAIN QUEST PAGE
+    displays all created Quests
+-->
+
+<% include partials/header %>
+
+<div class = "container">
+    
+    <div class="user" style="text-align: center;">
+      <img src="/images/pirate.png" alt="user">
+      <h1><%=user%></h1>
+    </div>
+  
+  <div class="row">
+    <ul id="pills" class="nav nav-pills nav-justified" style="padding-bottom: 10px;">
+      <li class="active"><a data-toggle="pill" href="/#post">Posted</a></li>
+      <li><a data-toggle="pill" href="#complete">Completed</a></li>
+      
+    </ul>
+    
+    <div class="tab-content">
+      <div id="post" class="tab-pane active">
+        <% if (postnum == 1) { %>
+        <p style= "text-align: center; size: 25px; color: #3FA9F5;"><strong><%=postnum %> post</strong></p>
+        <% }else { %>
+        <p style= "text-align: center; size: 25px; color: #3FA9F5;"><strong><%=postnum %> posts</strong></p>
+        <% } %>
+        <% quests.forEach(function(quest){ %>
+                <div class="row">
+                  <div class="panel panel-default">
+                    <div class="panel-heading">
+                      <a href="/q/<%= quest.category %>/<%= quest._id%>"><h2 class="panel-title questTitle"><%= quest.title %></h2></a>
+                    </div>
+                    <div class="panel-body">
+                        <a href="/q/<%= quest.category %>"><p class="category"><%= quest.category %></p></a><p class="divider"></p>
+                        <p class="numOfSteps"><%= quest.stepnum %> Steps</p><p class="divider"></p>
+                        <p class="times">Solved <%= quest.timessolved %> Times</p><p class="divider"></p>
+                        <p class="times">Viewed <%= quest.timesviewed %> Times</p><p class="divider"></p>
+                        <p class="date"><%= quest.date %></p>
+                    </div>
+                  </div>
+                </div>
+        <% }); %>
+      </div>
+      <div id="complete" class="tab-pane">
+        <p style= "text-align: center; size: 25px; color: #3FA9F5;"><strong><%=compnum %> completed</strong></p>
+          <% completed.forEach(function(quest){ %>
+                <div class="row">
+                  <div class="panel panel-default">
+                    <div class="panel-heading">
+                      <a href="/q/<%= quest.category %>/<%= quest._id%>"><h2 class="panel-title questTitle"><%= quest.title %></h2></a>
+                    </div>
+                    <div class="panel-body">
+                        <a href="/q/<%= quest.category %>"><p class="category"><%= quest.category %></p></a><p class="divider"></p>
+                        <p class="numOfSteps"><%= quest.stepnum %> Steps</p><p class="divider"></p>
+                        <p class="times">Solved <%= quest.timessolved %> Times</p><p class="divider"></p>
+                        <p class="times">Viewed <%= quest.timesviewed %> Times</p><p class="divider"></p>
+                        <p class="date"><%= quest.date %></p>
+                    </div>
+                  </div>
+                </div>
+        <% }); %>
+        
+        
+        
+        
+      </div>
+      <!--<div id="about" class="tab-pane">-->
+      <!--  <p>This will be the user's data and stats on the site.</p>-->
+      <!--</div>-->
+    </div>
+  </div>
+</div>
+
+   
+
+<% include partials/footer %>

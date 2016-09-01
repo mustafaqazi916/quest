@@ -1,0 +1,21 @@
+{
+  "name": "quest",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Nicholas K. Thompson",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.15.1",
+    "ejs": "^2.4.1",
+    "express": "^4.13.4",
+    "express-paginate": "^0.2.1",
+    "mongoose-paginate": "^5.0.0",
+    "pagination": "^0.4.4",
+    "simple-encryptor": "^1.1.0",
+    "super-pagination": "^0.5.12"
+  }
+}

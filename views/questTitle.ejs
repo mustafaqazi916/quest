@@ -1,0 +1,204 @@
+<% include partials/header %>
+<% var i = 1; %>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js"></script>
+<script type = 'text/javascript'>
+  var answer =[];
+</script>
+
+<% questTitle.forEach(function(quest){ %>
+
+<div class = "container">
+  
+<h1 class="text-center title"><%= quest.title.charAt(0).toUpperCase() + quest.title.slice(1) %></h1>
+    
+    <script type = "text/javascript">
+        var stepnums = <%= quest.steps.length %>;
+        var idq = "<%=quest._id %>";
+        var qcat = "<%= quest.category %>";
+        function decrypt(s) {
+            var e={},i,b=0,c,x,l=0,a,r='',w=String.fromCharCode,L=s.length;
+            var A="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+            for(i=0;i<64;i++){e[A.charAt(i)]=i;}
+            for(x=0;x<L;x++){
+                c=e[s.charAt(x)];b=(b<<6)+c;l+=6;
+                while(l>=8){((a=(b>>>(l-=8))&0xff)||(x<(L-2)))&&(r+=w(a));}
+            }
+            return r;
+        }
+
+    </script>
+    
+           <div class="row">
+              <div class="panel panel-default description">
+                <div class="panel-body">
+                    <a href="/q/<%= quest.category %>"><p class="category"><%= quest.category %></p></a><p class="divider"></p>
+                    <p class="numOfSteps"><%= quest.stepnum %> Steps</p><p class="divider"></p>
+                    <p class="times"><%= quest.timessolved %> Solves</p><p class="divider"></p>
+                    <p class="times"><%= quest.timesviewed %> Views</p><p class="divider"></p>
+                    <%  var creatorOrEdit = quest.creator;
+                        var creatorLink = "/users/" + quest.creator;
+                        if (isAuth){
+                          if(quest.creator == usertop.username){
+                            creatorOrEdit = "Edit"
+                            creatorLink = "/qediting/" + quest._id;
+                          }
+                        }  
+                    %>
+                    <p class ="pull-right"><a href = "<%= creatorLink %>"><%= creatorOrEdit %> </a></p>
+                    <img src="/images/pirate.png" alt="Quallu" class="pirate pull-right">
+                    <p class="date"><%= quest.date %></p>
+                </div>
+              </div>
+            </div>
+            
+            <div class="row">
+                  <ul class="list-group">
+                    <li class="list-group-item clue"><h3><%= 1 %>. <%= quest.steps[0].clue %></h3></li>
+                    <li class="list-group-item link"><div id="showLink0" style="object-fit: scale-down; width: 100%; overflow: hidden; margin:auto;"></div></li>
+                    <li class="list-group-item answerbox">
+                      <form>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="userAnswer<%= 0 %>" placeholder="Answer">
+                            <span class="input-group-btn">
+                              <button type="button" onclick="showStep()" class="btn qualluViolet"/><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></button>
+                            </span>
+                        </div><!-- /input-group -->
+                      </form>
+                    </li>
+                  </ul>
+            </div>   
+
+    <script type = "text/javascript">
+          answer[0] = decrypt("<%= quest.steps[0].answer %>").split(", ");
+    </script>
+
+            <% for(var i=1; i<quest.steps.length; i++){ %>
+                 <div class="row" id="nextStep<%= i%>" style="display:none;">
+                        <ul class="list-group">
+                          <li class="list-group-item clue"><h3><%= i + 1 %>. <%= quest.steps[i].clue %></h3></li>
+                          <li class="list-group-item link"><div id="showLink<%= i %>"  style="object-fit: scale-down; width: 100%; overflow: hidden; margin:auto;"></div></li>
+                          <li class="list-group-item answerbox grey">
+                            <form>
+                              <div class="input-group">
+                                <input type="text" class="form-control" id="userAnswer<%= i %>" placeholder="Answer">
+                                <span class="input-group-btn">
+                                  <button type="button" onclick="showStep()" class="btn qualluViolet"/><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></button>
+                                </span>
+                              </div><!-- /input-group -->
+                            </form>
+                          </li>
+                        </ul>
+                 
+              </div>
+                         
+                 <script type = 'text/javascript'>
+                   console.log(answer);
+                    answer[<%= i %>] = decrypt("<%= quest.steps[i].answer %>").split(", ");
+                   //changing the link type
+                       <% for(var x=0; x<quest.steps.length; x++){ %>
+                         
+                          if("<%= quest.steps[x].qType %>" == "wiki"){
+                                var wiki = '<iframe style="overflow-y: scroll;" src="<%= quest.steps[x].link %>"></iframe>';
+                                document.getElementById('showLink<%= x %>').innerHTML = wiki;
+                          } else if("<%= quest.steps[x].qType %>" == "webpage"){
+                                var webpage = '<a href="<%= quest.steps[x].link %>" target="_blank"><img src="/images/link.png" class="linkimage" alt="Link"></a>';
+                                document.getElementById('showLink<%= x %>').innerHTML = webpage;
+                          } else if("<%= quest.steps[x].qType %>" == "youtube"){
+                                var youtube = '<div class="embed-responsive embed-responsive-16by9"><iframe class="embed-responsive-item" src="<%= quest.steps[x].link %>"></iframe></div>'.replace("watch?v=", "embed/");
+                                document.getElementById('showLink<%= x %>').innerHTML = youtube;
+                          } else if("<%= quest.steps[x].qType %>" == "map"){
+                                var map = '<iframe width="600" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBRK_agG2N-dcNS6cFEvf1Wn__38g8APcg &q=<%= quest.steps[x].link %>" allowfullscreen></iframe>';
+                                document.getElementById('showLink<%= x %>').innerHTML = map;
+                          } else if("<%= quest.steps[x].qType %>" == "image"){
+                                var image = '<img src="<%= quest.steps[x].link %>" style="width:100%"><div style="font-size: 80%;">Source: <a href="<%= quest.steps[x].link%>"><%= quest.steps[x].link.substring(0,50)%>...</a></div>';
+                                document.getElementById('showLink<%= x %>').innerHTML = image;
+                          }
+        
+                       <% } %>
+                 </script>
+            
+            <% } %>
+
+<% }); %>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header" style="border-bottom: 0px solid #FFFFFF;">
+        <h3 class = "congrats">Congrats! You have completed this Quest.</h3>
+      </div>
+      <div class="modal-body">
+        <img src="http://i1028.photobucket.com/albums/y342/nickkt2/chest_zpse6ofnh8h.png" alt="Quallu" class="chest">
+      </div>
+      <div class="modal-footer" style="border-top: 0px solid #FFFFFF; text-align: center; margin-left: auto; margin-right: auto;">
+        <button class="btn qualluBlue" style="width:190px; margin-bottom: 20px" onclick="markQompleted()">Return Home</button>
+       <% if(usertop != null && questTitle[0].creator != usertop.username) { %>
+        <button class="btn qualluBlue" style="width:190px; margin-bottom: 20px" onclick="markQompletedliked()">Give This Quest a Coin<img src="/images/coin.png" alt="Quallu" class="heart pull-right"></button>
+        <% } %>      
+      </div>
+    </div>
+  </div>
+</div>
+
+<% function convertToSlug(Text){ 
+    return Text
+        .toLowerCase()
+        .replace(/ /g,'-')
+        .replace(/[^\w-]+/g,'')
+        ;
+} %>
+<script type = 'text/javascript'>
+var count = 1;
+var id = "userAnswer" + (count-1);
+function showStep() {
+  for(var x = 0; x < answer[count-1].length; x++){
+  if(answer[count-1][x].toLowerCase() == document.getElementById(id).value.toLowerCase() && count == stepnums){
+    $('#myModal').modal('show');
+    document.getElementById('userAnswer' + (count-1)).style.background = "#3FA9F5";
+    // QuestPost.update({"_id" : idq}, {$inc: {timessolved: 1}});
+    
+  }
+  else if(answer[count-1][x].toLowerCase() == document.getElementById(id).value.toLowerCase()){
+    document.getElementById('nextStep' + count).style.display = "block";
+    document.getElementById('userAnswer' + (count-1)).style.background = "#3FA9F5";
+    count++;
+    id = "userAnswer" + (count-1);
+    $("html, body").animate({ scrollTop: $(document).height() }, 1500);
+  }
+  else if(answer[count-1][x].toLowerCase() != document.getElementById(id).value.toLowerCase())
+    document.getElementById('userAnswer' + (count-1)).style.background = "#ff7f7f";
+  }
+}
+
+
+$('body').on('keydown', 'input, select, textarea', function(e) {
+    var self = $(this)
+      , form = self.parents('form:eq(0)')
+      , focusable
+      , next
+      ;
+    if (e.keyCode == 13) {
+        focusable = form.find('input,a,select,button,textarea').filter(':visible');
+        next = focusable.eq(focusable.index(this)+1);
+        if (next.length) {
+            next.click();
+        } else {
+            next.click();
+        }
+        return false;
+    }
+});
+
+function markQompleted(){
+  location.href = '/q/'+qcat+'/'+idq+'/qompleted';
+}
+
+function markQompletedliked(){
+  location.href = '/q/'+qcat+'/'+idq+'/qompleted/lk';
+}
+
+</script>
+
+
+<% include partials/footer %>

@@ -1,0 +1,256 @@
+<!--CREATE A QUEST PAGE
+    users enter steps and submit quest
+-->
+
+<% include partials/header %>
+
+<!--title and category input-->
+<div class = "container">
+    <div class="row">
+        <h1 class="text-center title">Edit Your Quest</h1>
+        <div class="post">
+            <form action="/q/<%=quest._id%>" method="POST">
+                <div class="form-group" style="padding-left:5px; padding-right: 5px;">
+                    <label>Title</label>
+                    <input class="form-control" type="text" name="title" placeholder="The California Quest!"  value ="<%=quest.title%>"required>
+                </div>
+                <div class="form-group" style="padding-left:5px; padding-right: 5px;">
+                    <label>Category</label>
+                    <input class="form-control" type="text" name="category" placeholder="Geography" value ="<%=quest.category%>" required>
+                </div><br>
+                
+                <!--step 1 input box-->
+            <% for(var i = 0; i < quest.steps.length; i++) {  %>
+                <div id="step0" class="panel panel-default description">
+                  <div class="panel-body">
+                    <h4 class="stepTitle">Step <%= i + 1 %></h4>
+                    <div class="form-group">
+                        <label>Clue</label>
+                        <input class="form-control" type="text" name="steps[<%=i%>][0]" placeholder="What is the capitol of California?" value ="<%=quest.steps[i].clue%>" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Re-select the type of Step</label><br>
+                        <div class="btn-group"  role="group" aria-label="...">
+                            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                <span id="selected<%=i%>">What type of link is this step?</span>
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" required>
+                                <li><a class="type<%=i%>" name="<%=i%>" id="select" onclick="changeWeb(this.name)">Webpage</a></li>
+                                <li><a class="type<%=i%>" name="<%=i%>" id="select" onclick="changeWiki(this.name)">Wikipedia</a></li>
+                                <li><a class="type<%=i%>" name="<%=i%>" id="select" onclick="changeYou(this.name)">Youtube</a></li>
+                                <li><a class="type<%=i%>" name="<%=i%>" id="select" onclick="changeMaps(this.name)">Google Maps</a></li>
+                                <li><a class="type<%=i%>" name="<%=i%>" id="select" onclick="changeImage(this.name)">Image</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!--the buttons above trigger these hidden radio inputs so that the step type can be sent to the database-->
+                    <input style="display: none" type="radio" name="steps[<%=i%>][1]" id="webpage<%=i%>" value="webpage" required>
+                    <input style="display: none" type="radio" name="steps[<%=i%>][1]" id="wiki<%=i%>" value="wiki" required>
+                    <input style="display: none" type="radio" name="steps[<%=i%>][1]" id="youtube<%=i%>" value="youtube" required>
+                    <input style="display: none" type="radio" name="steps[<%=i%>][1]" id="maps<%=i%>" value="map" required>
+                    <input style="display: none" type="radio" name="steps[<%=i%>][1]" id="image<%=i%>" value="image" required>
+                    <div class="form-group">
+                        <label>Link</label>
+                        <input class="form-control" type="text" name="steps[<%=i%>][2]" id="link<%=i%>" placeholder="Choose a type of step above." value ="<%=quest.steps[i].link%>" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Answer</label>
+                        <input class="form-control" type="text" name="steps[<%=i%>][3]" placeholder="Sacramento" value ="<%=quest.steps[i].answer%>" required>
+                    </div>
+                  </div>
+                </div>
+                <% } %>
+                <!--<div class="form-group">-->
+                <!--    <div class="btn-group" style="padding-left:5px; padding-right: 5px;" role="group">-->
+                <!--        <button style="display:none;" type="button" onclick="removeStep();" id="remove" class="btn btn-default qualluRedFill">Delete Step</button>-->
+                <!--        <button type="button" class="btn btn-default qualluBlueFill" onclick="addStep()">Add Step</button>-->
+                <!--    </div>-->
+                <!--</div>-->
+                <div class="btn-toolbar center-block" role="toolbar" aria-label="Toolbar with button groups">
+                    <button class="btn btn-sm btn-default center-block qualluBlue" type="submit" value="submit request">Submit Changes</button>
+                    <button class = "btn btn-sm qualluRedFill" id = "delquest" data-toggle="modal" data-target="#myModal">Delete Quest</button>
+                </div>
+            </form>
+        
+        </div>
+    </div>
+    
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="background-color: #ff3366;">
+      <div class="modal-header" style="border-bottom: 0px solid #ff3366;">
+        <h3 class = "congrats" style="color: white;">Are you sure you want to delete this quest?</h3>
+      </div>
+      <div class="modal-footer"  style="border-top: 0px solid #ff3366;">
+        <a href = "/quests/del/<%=quest._id%>"><button class="btn qualluRedFill" style="margin-bottom: 20px; border: 1px solid #FFF;" onclick="markQompleted()">Delete</button></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script type = 'text/javascript'>
+
+//count increases when 'add step' button is pressed
+var count = 1;
+var flag = false;
+document.getElementById('id').value = Date.now();
+//default text displayed in link input box before Quest type button is pressed
+var linkInstructions = "Choose a type of step.";
+document.getElementById('link0').setAttribute('placeholder', linkInstructions)
+
+//the following 4 functions trigger the right radio button and change the placeholder text for link URL
+function changeWeb(clicked_name){
+        var style = 'type' + clicked_name
+        var type = document.getElementsByClassName(style);
+        type[0].style.backgroundColor = '#A270FF';
+        type[1].style.backgroundColor = 'white';
+        type[2].style.backgroundColor = 'white';
+        type[3].style.backgroundColor = 'white';
+        type[4].style.backgroundColor = 'white';
+        var link = "link" + clicked_name;
+        var webpage = "webpage" + clicked_name;
+        linkInstructions = "Paste the address of the webpage here.";
+         document.getElementById(link).setAttribute('placeholder', linkInstructions);
+         document.getElementById(webpage).checked = true;
+         document.getElementById('selected'+ clicked_name).innerHTML = "Webpage";
+}
+
+function changeWiki(clicked_name){
+        var style = 'type' + clicked_name
+        var type = document.getElementsByClassName(style);
+        type[0].style.backgroundColor = 'white';
+        type[1].style.backgroundColor = '#A270FF';
+        type[2].style.backgroundColor = 'white';
+        type[3].style.backgroundColor = 'white';
+        type[4].style.backgroundColor = 'white';
+        var link = "link" + clicked_name;
+        var wiki = "wiki" + clicked_name;
+        linkInstructions = "Paste the address of the wikipedia page here.";
+         document.getElementById(link).setAttribute('placeholder', linkInstructions);
+         document.getElementById(wiki).checked = true;
+         document.getElementById('selected'+ clicked_name).innerHTML = "Wikipedia";
+}
+
+function changeYou(clicked_name){
+        var style = 'type' + clicked_name
+        var type = document.getElementsByClassName(style);
+        type[0].style.backgroundColor = 'white';
+        type[1].style.backgroundColor = 'white';
+        type[2].style.backgroundColor = '#A270FF';
+        type[3].style.backgroundColor = 'white';
+        type[4].style.backgroundColor = 'white';
+        var link = "link" + clicked_name;
+        var youtube = "youtube" + clicked_name;
+        linkInstructions = "Paste the address of the Youtube video here.";
+         document.getElementById(link).setAttribute('placeholder', linkInstructions);
+         document.getElementById(youtube).checked = true;
+         document.getElementById('selected'+ clicked_name).innerHTML = "Youtube";
+}
+
+function changeMaps(clicked_name){
+        var style = 'type' + clicked_name
+        var type = document.getElementsByClassName(style);
+        type[0].style.backgroundColor = 'white';
+        type[1].style.backgroundColor = 'white';
+        type[2].style.backgroundColor = 'white';
+        type[3].style.backgroundColor = '#A270FF';
+        type[4].style.backgroundColor = 'white';
+        var link = "link" + clicked_name;
+        var maps = "maps" + clicked_name;
+        linkInstructions = "Enter an address, location, or city here.";
+         document.getElementById(link).setAttribute('placeholder', linkInstructions);
+         document.getElementById(maps).checked = true;
+         document.getElementById('selected'+ clicked_name).innerHTML = "Google Maps";
+}
+
+function changeImage(clicked_name){
+        var style = 'type' + clicked_name
+        var type = document.getElementsByClassName(style);
+        type[0].style.backgroundColor = 'white';
+        type[1].style.backgroundColor = 'white';
+        type[2].style.backgroundColor = 'white';
+        type[3].style.backgroundColor = 'white';
+        type[4].style.backgroundColor = '#A270FF';
+        var link = "link" + clicked_name;
+        var image = "image" + clicked_name;
+        linkInstructions = "Copy the image address and paste it here.";
+         document.getElementById(link).setAttribute('placeholder', linkInstructions);
+         document.getElementById(image).checked = true;
+         document.getElementById('selected'+ clicked_name).innerHTML = "Image";
+}
+
+function removeStep() {
+    var id = 'step'+ (count-1);
+    $("#" + id).remove();
+    count--;
+    $(document).ready(function() {
+    $('#step' + (count-1)).effect("highlight", {color: '#3FA9F5'}, 500);
+    });
+    // $("html, body").animate({ scrollTop: $('#step' + (count-2)).offset().top }, 1000);
+}
+
+//this function adds the next step and increases count
+function addStep(){
+    document.getElementById('remove').style.display = "block";
+    flag = true;
+    var str = '<div id="step'+count+'" class="panel panel-default description">'+
+'                  <div class="panel-body">'+
+'                    <h4 class="stepTitle">Step '+(count+1)+'</h4>'+
+'                    <div class="form-group">'+
+'                        <label>Clue</label>'+
+'                        <input class="form-control" type="text" name="steps['+count+'][0]" placeholder="Instructions for this step." required>'+
+'                    </div>'+
+'                    <div class="form-group">'+
+'                        <label>Type of Step</label><br>'+
+'                        <div class="btn-group" role="group" aria-label="...">'+
+'                            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">'+
+'                                <span id="selected'+count+'">Select Step Type</span>'+
+'                                <span class="caret"></span>'+
+'                            </button>'+
+'                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">'+
+'                                <li><a class="type'+count+'" name="'+count+'" id="select" onclick="changeWeb(this.name)">Webpage</a></li>'+
+'                                <li><a class="type'+count+'" name="'+count+'" id="select" onclick="changeWiki(this.name)">Wikipedia</a></li>'+
+'                                <li><a class="type'+count+'" name="'+count+'" id="select" onclick="changeYou(this.name)">Youtube</a></li>'+
+'                                <li><a class="type'+count+'" name="'+count+'" id="select" onclick="changeMaps(this.name)">Google Maps</a></li>'+
+'                                <li><a class="type'+count+'" name="'+count+'" id="select" onclick="changeImage(this.name)">Image</a></li>'+
+'                            </ul>'+
+'                        </div>'+
+'                    </div>'+
+'                    <input style="display: none" type="radio" name="steps['+count+'][1]" id="webpage'+count+'" value="webpage" required>'+
+'                    <input style="display: none" type="radio" name="steps['+count+'][1]" id="wiki'+count+'" value="wiki" required>'+
+'                    <input style="display: none" type="radio" name="steps['+count+'][1]" id="youtube'+count+'" value="youtube" required>'+
+'                    <input style="display: none" type="radio" name="steps['+count+'][1]" id="maps'+count+'" value="map" required>'+
+'                    <input style="display: none" type="radio" name="steps['+count+'][1]" id="image'+count+'" value="image" required>'+
+'                    <div class="form-group">'+
+'                        <label>Link</label>'+
+'                        <input class="form-control" type="text" name="steps['+count+'][2]" placeholder="Choose a type of step above." id="link'+count+'" required>'+
+'                    </div>'+
+'                    <div class="form-group">'+
+'                        <label>Answer</label>'+
+'                        <input class="form-control" type="text" name="steps['+count+'][3]" placeholder="Answer to step" required>'+
+'                    </div>'+
+'                  </div>'+
+'                </div>',
+    div = document.getElementById( 'step'+(count-1)+'' );
+
+    div.insertAdjacentHTML( 'afterend', str );
+    $("html, body").animate({ scrollTop: $(document).height() }, 1000);
+    count++;
+}
+
+//this function makes sure that a Quest is > 1 step
+// function btnClick() {
+//     if (!flag){
+//         alert("A Quest cannot be 1 step. Please add a step to have a valid Quest.")
+//         return false;
+        
+//     } else
+//         return true;
+// }
+
+</script>
+
+<% include partials/footer %>

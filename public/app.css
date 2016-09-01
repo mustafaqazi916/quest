@@ -1,0 +1,411 @@
+.background { 
+  background: url(/images/home2.gif) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  background-color: #FFFFFF;
+}
+
+body{
+    font-family: 'Roboto', sans-serif;
+    background-color: #fafafa;
+    /*background: url(/images/background.png) no-repeat center center fixed; */
+    /*-webkit-background-size: cover;*/
+    /*-moz-background-size: cover;*/
+    /*-o-background-size: cover;*/
+    /*background-size: cover;*/
+}
+
+.title {
+    font-family: 'Gudea', sans-serif;
+    font-weight: 700; 
+    color: #A270FF;
+    padding-bottom: 15px;
+    padding-top: 65px;
+}
+
+
+.stepTitle {
+    font-family: 'Gudea', sans-serif;
+    font-weight: 700; 
+    color: #A270FF;
+}
+
+.category {
+    color: #3FA9F5;
+    display: inline-block;
+}
+
+.numOfSteps {
+    color: #ff3366;
+    display: inline-block;
+}
+
+.times {
+    color: black;
+    display: inline-block;
+    margin: 0 0 0px;
+}
+
+.timesImg {
+    display: inline-block;
+}
+
+.date {
+    display: inline-block;
+    color: #a8a8a8;
+}
+
+.well{
+	background-color: #FFFFFF;
+}
+
+.post {
+    margin: 30px auto;
+}
+
+.divider{
+    padding-left: 10px;
+    padding-right: 5px;
+    display: inline-block;
+}
+iframe {
+    border: none;
+    position: relative;
+    width: 100%;
+    height: 480px; 
+}
+.congrats{
+    color: #3FA9F5;
+    text-align: center;
+}
+
+.breadcrumb{
+    background-color: white;
+    padding-top: 10px;
+    padding-bottom: 0px;
+}
+
+#likebtn  {
+    padding-bottom: 10px;
+}
+
+.list-group {
+    padding-left: 0;
+    margin-bottom: 20px;
+    margin-left: 5px;
+    margin-right:5px;
+}
+
+.list-group-item.clue {
+    padding: 0px;
+    padding-left:15px;
+    border-radius: 0px;
+}
+
+.list-group-item.link {
+    padding: 0px;
+    border-radius: 0px;
+    border-bottom: 2px solid #ddd;
+    
+}
+
+.list-group-item.answerbox {
+    padding: 0px;
+    padding-top: 15px;
+    border-radius: 0px;
+    border-style: none;
+    background-color: #FAFAFA
+}
+
+.menu {
+    background-color: white;
+}
+
+.navbar-default .navbar-nav>li>a {
+    color: #A270FF;
+}
+
+.logo {
+    height: 60%;
+    width: 60%;
+    padding-top: 50px;
+    display: block;
+    margin: auto;
+}
+
+.linkimage {
+    width: 100%;
+    height:auto;
+}
+
+.chest {
+    height: 100px;
+    width: auto;
+    padding-top: 10px;
+    display: block;
+    margin: auto;
+}
+
+.heart {
+    height: 20px;
+    width: auto;
+    padding: 5px;
+}
+
+.pirate {
+    height: 20px;
+    width: auto;
+    padding-right: 7px;
+}
+
+.logoMenu {
+    height: 20px;
+    width: auto;
+}
+
+.center {
+    margin-top: 55px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.qualluViolet {
+    background-color: #A270FF;
+    color: white;
+}
+
+.qualluBlue {
+    background-color: white;
+    color: #3FA9F5;
+    border-color: #3FA9F5;
+}
+
+.qualluRed {
+    background-color: #ff3366;
+    color: #FFFFFF;
+    border-color: #ff3366;
+}
+
+.qualluBlueFill {
+    background-color: #3FA9F5;
+    color: #FFFFFF;
+    border-color: #3FA9F5;
+}
+
+.qualluRedFill {
+    background-color: #ff3366;
+    color: #FFFFFF;
+    border-color: #ff3366;
+}
+
+.nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover {
+    background-color: white;
+    color: #3FA9F5;
+    border: 1px solid;
+    border-color: #3FA9F5;
+}
+
+.button {
+    position:absolute;
+    top: 50%;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+.qualluBlueFill:hover {
+  color: #ffffff; 
+  background-color: #3FA9F5; 
+  border-color: #3FA9F5;
+}
+
+.qualluRed:hover {
+  color: #ffffff; 
+  background-color: #ff3366; 
+  border-color: #ff3366;
+
+}
+
+.qualluBlueFill:focus {
+  color: #ffffff; 
+  background-color: #3FA9F5; 
+  border-color: #3FA9F5;
+}
+
+.qualluRed:focus {
+  color: #ffffff; 
+  background-color: #ff3366; 
+  border-color: #ff3366;
+
+}
+
+.questTitle {
+    color: #A270FF;
+    font-weight: 500; 
+}
+
+a {
+    color: #3FA9F5;
+}
+
+.sort{
+    padding-right: 15px;
+}
+
+.sortActive{
+    color: #ff3366;
+}
+
+.centerSort{
+    text-align: center;
+    padding-bottom: 10px;
+}
+
+.panel-default>.panel-heading {
+    background-color: #FFFFFF;
+    border-radius: 0px;
+    border-color: #F5F5F5;
+}
+
+.panel-title {
+    color: #a270ff;
+}
+
+#likebtn {
+    color: #a270ff;
+}
+
+label{
+    color: #3FA9F5;
+}
+
+#easyPaginate {
+    width:auto;
+}
+
+#easyPaginate img {
+    display:block;
+    margin-bottom:10px;
+    
+}
+
+.easyPaginateNav {
+    display: inline-block;
+    text-align: center;
+}
+
+.easyPaginateNav a {
+    display: inline-block;
+    padding: 6px 12px;
+    line-height: 1.42857143;
+    color: #A270FF;
+    text-decoration: none;
+    background-color: #fff;
+    margin-top: 15px;
+    margin-bottom: 20px;
+
+}
+
+.easyPaginateNav a.current {
+    display: inline-block;
+    padding: 6px 12px;
+    line-height: 1.42857143;
+    color: #fff;
+    text-decoration: none;
+    background-color: #A270FF;
+    border: 1px solid #ddd;
+}
+
+ul {
+    padding: 0;
+    list-style-type: none;
+}
+
+li{
+    list-style-type: none;
+    padding:0;
+    margin:0;
+}
+
+.navbar-default .navbar-toggle .icon-bar {
+    background-color: #A270FF;
+}
+
+.navbar-toggle {
+    border: 0px solid transparent;
+
+}
+
+.user{
+    padding-top: 65px;
+    padding-bottom:15px;
+    text-align:center;
+}
+
+.user img{
+    width: 60px;
+    height: relative;
+}
+
+.user h1{
+    font-family: 'Gudea', sans-serif;
+    font-weight: 700; 
+    color: #A270FF;
+    position: relative;
+
+}
+
+
+
+.panel-default {
+    border-radius: 0px;
+    border: 1px solid #ddd;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-bottom: 15px;
+    box-shadow: 0 1px 2px rgba(0,0,0,.05);
+}
+
+.description {
+    border: 1px solid #ddd;
+    box-shadow: 0 1px 1px rgba(0,0,0,.05);
+}
+
+.box {
+    border-top: 1px solid #ddd;
+}
+
+.table>tbody>tr>td{
+    border: 1px solid #ddd;
+}
+
+.hot {
+    color: #FF3366;
+}
+
+.new {
+    color: #A270FF;
+}
+
+.pop {
+    color: #3FA9F5;
+}
+
+footer {
+    display: block;
+    background-color: #A270FF;
+    color: #FFFFFF;
+    padding-left: 50px;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #ddd;
+}
+
+.moreInfo {
+    padding-left: 10px;
+    color: #FF3366;
+}
+
+

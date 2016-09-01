@@ -1,0 +1,68 @@
+<!--CATEGORIES PAGE
+    browse all of the categories and search
+-->
+
+<% include partials/header %>
+
+<div class = "container">
+    
+    <h1 class="text-center title">Categories</h1>
+    
+    <div class="form-group">
+        <div class="input-group">
+          <input type="text" id="search" class="form-control" placeholder="Search Categories" />
+          <span class="input-group-btn">
+            <button class="btn btn-default qualluViolet" type="button"><span class="glyphicon glyphicon-search qualluViolet" aria-hidden="true"></span></button>
+          </span>
+        </div><!-- /input-group -->
+    </div>
+    
+    <div class="panel panel-default box">
+        <table id="table" class="table">
+            <tbody>
+                <%  var called = [];
+                    var numOfCalls;
+                    var questOrQuests = "Quest";
+                    var x = 0;
+                    categories.forEach(function(cat){
+                        var flag = false;
+                        numOfCalls = 0;
+                        called.push(cat);
+                        for(var i = 0; i<called.length; i++){
+                            if(called[i] == cat)
+                                numOfCalls += 1;
+                        }
+                        if(numOfCalls > 1){
+                            flag = true;
+                        }
+                        if(countPosts.length > 1)
+                            questOrQuests = "Quests";
+                        if(flag == false){
+                %>
+                            <tr>
+                                <td><a href="/q/<%= cat %>"><h5 class="category"><%= cat %></h5></a></td>
+                            </tr>
+                <%
+                        x++;
+                        console.log(countPosts[x]);
+                    }
+                }); %>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script type = 'text/javascript'>
+    $("#search").keyup(function(){
+        _this = this;
+        // Show only matching TR, hide rest of them
+        $.each($("#table tbody tr"), function() {
+            if($(this).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
+               $(this).hide();
+            else
+               $(this).show();                
+        });
+    }); 
+</script>
+           
+<% include partials/footer %>

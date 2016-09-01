@@ -1,0 +1,61 @@
+<% include partials/header %>
+
+<h1 class="text-center title">Sign Up</h1>
+
+<!--<form name = "register" action = "/register" onsubmit = "return checkForm()" method = "POST">-->
+<!--    <input type = "text" name = "username" placeholder = "username">-->
+<!--    <input type = "text" name = "password" placeholder = "password">-->
+<!--    <input type = "text"  name = "passverify" placeholder = "verify password">-->
+<!--    <button onclick = "return checkForm()">Sign Up</button>-->
+<!--</form>-->
+<div class="container">
+    <div class="col-md-4 text-center"></div>
+    <div class="col-md-4" style="border-bottom: 1px #dedbdb solid; border-top: 1px #dedbdb solid;padding-bottom: 25px;padding-top: 25px;">
+        <form method="POST" action="/register">
+            <fieldset>
+                <div class="form-group">
+                    <label>Username</label>
+                    <input title="Enter your username" type="text" required pattern="\w+" name="username" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input title="Password must contain at least 6 characters, including UPPER/lowercase and numbers" type="password" class="form-control" name="password" onchange="
+                      this.setCustomValidity(this.validity.patternMismatch ? this.title : '');
+                      if(this.checkValidity()) form.pwd2.pattern = this.value;">
+                </div>
+                <div class="form-group">
+                    <label>Confirm Password</label>
+                    <input title="Please enter the same Password as above" type="password" class="form-control" name="pwd2" onchange="
+                      this.setCustomValidity(this.validity.patternMismatch ? this.title : '');">
+                </div>
+            <input type="submit" class="btn btn-sm qualluBlue center-block" value="Sign Up">
+            </fieldset>
+        </form>
+    </div>
+</div>
+<script>
+    function checkForm(){
+        var user = document.forms["register"]["username"].value;
+        var pass = document.forms["register"]["password"].value;
+        var passverify = document.forms["register"]["passverify"].value;
+        console.log(user + pass  + passverify);
+        if(hasSpace(user) || hasSpace(pass)){
+            alert("Invalid input: Username and Password cannot have spaces");
+            return false;
+        }
+        if(pass ==! passverify){
+            alert("Passwords do not match");
+            return false;
+        }
+            return true;
+        }
+        
+    
+    function hasSpace(e) {
+        return e.indexOf(" ") > 0;
+    }
+    
+</script>
+
+
+<% include partials/footer %>

@@ -1,0 +1,47 @@
+<!--USERS PAGE
+    browse all of the users and search
+-->
+
+<% include partials/header %>
+
+<div class = "container">
+    
+    <h1 class="text-center title">Users</h1>
+    
+    <div class="form-group">
+        <div class="input-group">
+          <input type="text" id="search" class="form-control" placeholder="Search Users" />
+          <span class="input-group-btn">
+            <button class="btn btn-default qualluViolet" type="button"><span class="glyphicon glyphicon-search qualluViolet" aria-hidden="true"></span></button>
+          </span>
+        </div><!-- /input-group -->
+    </div>
+    
+    <div class="panel panel-default box">
+        <table id="table" class="table">
+            <tbody>
+                <% user.forEach(function(user){ %>
+                            <tr>
+                                <td><a href="/users/<%= user.username %>"><h5 class="category"><%= user.username %></h5></a></td>
+                            </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script type = 'text/javascript'>
+    $("#search").keyup(function(){
+        _this = this;
+        // Show only matching TR, hide rest of them
+        $.each($("td"), function() {
+            if($(this).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
+               $(this).hide();
+            else
+               $(this).show();                
+        });
+    }); 
+    
+</script>
+           
+<% include partials/footer %>

@@ -617,7 +617,9 @@ function getDateValue(date) {
 //======================
 
 
-mongoose.connect("mongodb://localhost/quest");
+// mongoose.connect("mongodb://localhost/quest");
+mongoose.connect("mongodb://mustafa:allen@ds019936.mlab.com:19936/questavi");
+mongodb://mustafa:allen@ds019936.mlab.com:19936/questavi 
 
 var postSchema = mongoose.Schema({
     title: String,

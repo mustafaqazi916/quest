@@ -492,6 +492,10 @@ app.get("/q/:category/:title/qompleted/lk", function(req, res) {
     });
 });
 
+app.get("/*", function(req, res) {
+    res.render("error");
+})
+
 //======================
 //FUNCTIONS
 //======================

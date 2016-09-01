@@ -392,7 +392,14 @@ app.get("/q/:category/:title/qompleted", function(req, res) {
                 res.redirect("/q");
             }
         });
-        } else{
+        } 
+        else{
+         QuestPost.update({"_id" : qId}, {$inc: {timessolved: 1}}, function(err, numeffected) {
+             if(err){
+                 console.log("Failure updating solved" + err);
+                 res.render("errors", {usertop: req.user, isAuth: req.isAuthenticated()});
+             }
+      });        
         
     res.redirect("/q");  
         }

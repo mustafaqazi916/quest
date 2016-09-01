@@ -135,7 +135,9 @@
         <button class="btn qualluBlue" style="width:190px; margin-bottom: 20px" onclick="markQompleted()">Return Home</button>
        <% if(usertop != null && questTitle[0].creator != usertop.username) { %>
         <button class="btn qualluBlue" style="width:190px; margin-bottom: 20px" onclick="markQompletedliked()">Give This Quest a Coin<img src="/images/coin.png" alt="Quallu" class="heart pull-right"></button>
-        <% } %>      
+        <% } else { %>    
+        <a href = "/login"><button class="btn qualluBlue" style="width:190px; margin-bottom: 20px">Give This Quest a Coin!<img src="/images/coin.png" alt="Quallu" class="heart pull-right"></button></a>
+        <% } %>
       </div>
     </div>
   </div>

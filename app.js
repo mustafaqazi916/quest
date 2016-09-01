@@ -8,7 +8,6 @@ passportLocalMongoose = require("passport-local-mongoose"),
 User                  = require("./models/User"),
 encryptor             = require('simple-encryptor')(key),
 session               = require("express-session"),
-methodOverride        = require("method-override"),
 mongoose              = require("mongoose");
 
 var app = express();
@@ -23,7 +22,7 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(methodOverride("_method"));
+// app.use(methodOverride("_method"));
 
 
 passport.serializeUser(User.serializeUser());

@@ -1,0 +1,27 @@
+<% include partials/header %>
+
+<div class = "container">
+<h1 class="text-center title">Log in</h1>
+<div class="col-md-4 text-center"></div>
+    <div class="col-md-4" style = "border-bottom: 1px #dedbdb solid; border-top: 1px #dedbdb solid;padding-bottom: 25px;padding-top: 25px;">
+        <form action = "/login" method = "POST">
+            <div class="form-group">
+                <label>Username</label>
+                <input class="form-control" type = "text" name = "username">
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input class="form-control" type = "password" name = "password">
+            </div>
+            <!--<input type = "password" placeholder = "verify password">-->
+            <button class="btn btn-sm qualluBlue center-block">Log In</button>
+        </form>
+    <p id = "loginfail">Login failed. Please try again.</p>
+    <p style="
+    text-align: center;
+    padding-top: 20px;
+    ">Don't have an account? <a href = "/register">Sign Up</a></p>
+    </div>
+</div>
+
+<% include partials/footer %>

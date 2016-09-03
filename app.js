@@ -42,7 +42,8 @@ app.get("/register", function(req, res) {
 app.post("/register", function(req, res) {
    var username = req.body.username.trim();
    var password = req.body.password.trim();
-   User.register(new User({username: username}), password, function(err, user){
+   var email    = req.body.email.trim();
+   User.register(new User({username: username, email: email}), password, function(err, user){
        if(err){
            console.log(err);
            return res.render("register", {usertop: req.user, isAuth: req.isAuthenticated()});
@@ -65,9 +66,19 @@ app.get("/login", function(req, res) {
     res.render("login", {usertop: req.user, isAuth: req.isAuthenticated()});
 });
 
+app.get("/login/:id", function(req, res) {
+    incrementSolved(req.params.id);
+    res.render("login", {usertop: req.user, isAuth: req.isAuthenticated()});
+});
+
+
+app.get("/loginfailure", function(req, res) {
+    res.render("loginfail", {usertop: req.user, isAuth: req.isAuthenticated()});
+});
+
 app.post("/login", passport.authenticate("local", {
     successRedirect: "/q",
-    failureRedirect: "/login"
+    failureRedirect: "/loginfailure"
 }), function(req, res) {
     
 });
@@ -499,13 +510,20 @@ app.get("/q/:category/:title/qompleted/lk", function(req, res) {
     });
 });
 
-app.get("/*", function(req, res) {
-    res.render("error");
-})
 
 //======================
 //FUNCTIONS
 //======================
+
+function incrementSolved(id) {
+     QuestPost.update({"_id" : id}, {$inc: {timessolved: 1}}, function(err, numeffected) {
+             if(err){
+                 console.log("Failure updating solved" + err);
+             }
+      });
+}
+
+
 
 //changes title to URL title
 function convertToSlug(Text)

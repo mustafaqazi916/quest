@@ -165,6 +165,19 @@ iframe {
     width: auto;
 }
 
+#loginfail {
+
+font-weight: bold;
+    text-align: center;
+    padding-top: 10px;
+    border: 1px solid #ef8d8d;
+    padding-bottom: 10px;
+    margin-top: 25px;
+    color: red;
+    border-radius: 5px;
+
+    
+}
 .center {
     margin-top: 55px;
     margin-left: auto;
@@ -199,6 +212,10 @@ iframe {
     background-color: #ff3366;
     color: #FFFFFF;
     border-color: #ff3366;
+    
+    margin-left: 5px;
+    margin-top: 15px;
+
 }
 
 .nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover {

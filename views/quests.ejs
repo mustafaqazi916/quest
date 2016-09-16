@@ -27,7 +27,7 @@
                         <p class="times"><%= quest.timessolved %> Solves</p><p class="divider"></p>
                         <!--<img src="/images/chest.png" alt="Solves" class="pirate timesImg">-->
                         <%  var creatorOrEdit = quest.creator;
-                            var creatorLink = "users/" + quest.creator;
+                            var creatorLink = "/users/" + quest.creator;
                             if (isAuth){
                               if(quest.creator == usertop.username){
                                 creatorOrEdit = "Edit"

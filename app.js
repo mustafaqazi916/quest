@@ -49,7 +49,7 @@ app.post("/register", function(req, res) {
            return res.render("register", {usertop: req.user, isAuth: req.isAuthenticated()});
        }
       passport.authenticate("local")(req, res, function(){
-                  QuestPost.find({}, function(err, quests) {
+            QuestPost.find({}, function(err, quests) {
                if(err){
                    console.log(err);
                }else{
@@ -459,7 +459,7 @@ app.get("/post",isLoggedIn, function(req, res) {
     res.render("post", {usertop: req.user});
 });
 
-app.listen(process.env.PORT, process.env.IP, function(){
+app.listen(3000, function(){
     console.log("The Server Has Started!");
 });
 

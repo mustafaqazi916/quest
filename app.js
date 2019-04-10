@@ -459,7 +459,7 @@ app.get("/post",isLoggedIn, function(req, res) {
     res.render("post", {usertop: req.user});
 });
 
-app.listen(3000, function(){
+app.listen(process.env.PORT || 3000, function(){
     console.log("The Server Has Started!");
 });
 
